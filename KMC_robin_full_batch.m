@@ -52,3 +52,16 @@ fprintf('Done.\n')
 
 toc
 
+function x = ks_distance(kappa, timeList, z0, dd)
+
+    nn = length(timeList);
+    x = max(abs(cumulative_flux(kappa,timeList,z0,dd) - ((1:nn)-1/2)/nn));
+
+end
+
+function cumprob = cumulative_flux(kappa,t,z0,dd)
+
+    calcul = exp(-z0^2./(4*dd.*t)).*erfcx( (2*kappa.*t+z0)./sqrt(4*dd.*t));
+    cumprob = erfc(z0./sqrt(4*dd.*t)) - calcul;
+    
+end
